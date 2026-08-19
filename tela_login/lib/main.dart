@@ -1,52 +1,67 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const LoginApp());
+  runApp(const CadastroApp());
 }
 
-class LoginApp extends StatelessWidget {
-  const LoginApp({super.key});
+class CadastroApp extends StatelessWidget {
+  const CadastroApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Login',
+      title: 'Criar Conta',
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Login'),
-        ),
-        body: const LoginBody(),
+        body: const CadastroBody(),
       ),
     );
   }
 }
 
-class LoginBody extends StatelessWidget {
-  const LoginBody({super.key});
+class CadastroBody extends StatefulWidget {
+  const CadastroBody({super.key});
+
+  @override
+  State<CadastroBody> createState() => _CadastroBodyState();
+}
+
+class _CadastroBodyState extends State<CadastroBody> {
+  bool _aceitouTermos = true;
+  int _tentativas = 0;
+
+  void _alternarTermos(bool? valor) {
+    setState(() {
+      _aceitouTermos = valor ?? false;
+    });
+  }
+
+ void _cadastrar() {
+  setState(() {
+    _tentativas++;
+  });
+}
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: SizedBox(
-        width: 320,
+        width: 360,
         child: Card(
           elevation: 4,
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
-                  Icons.person,
-                  size: 70,
-                ),
-
-                const SizedBox(height: 16),
-
                 const Text(
-                  'Bem-vindo!',
+                  'Criar Conta',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
 
@@ -54,7 +69,17 @@ class LoginBody extends StatelessWidget {
 
                 const TextField(
                   decoration: InputDecoration(
+                    labelText: 'Nome completo',
+                    border: OutlineInputBorder(), //aplica as bordas
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                const TextField(
+                  decoration: InputDecoration(
                     labelText: 'E-mail',
+                    border: OutlineInputBorder(),
                   ),
                 ),
 
@@ -64,14 +89,33 @@ class LoginBody extends StatelessWidget {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Senha',
+                    border: OutlineInputBorder(), 
                   ),
                 ),
 
-                const SizedBox(height: 24),
+               const SizedBox(height: 16),
+
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _aceitouTermos,
+                      onChanged: _alternarTermos,
+                    ),
+                    const Text('Aceito os termos de uso'),
+                  ],
+                ),
+
+                const SizedBox(height: 16),
 
                 ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Entrar'),
+                  onPressed: _aceitouTermos ? _cadastrar : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: Text(
+                    'Cadastrar (tentativa $_tentativas)',
+                  ),
                 ),
               ],
             ),
