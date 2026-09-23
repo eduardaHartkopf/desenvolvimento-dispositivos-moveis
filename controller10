@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+ 
+void main() {
+  runApp(const MeuApp());
+}
+ 
+class MeuApp extends StatelessWidget {
+  const MeuApp({super.key});
+ 
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Controller Demo',
+      home: const TelaControllers(),
+    );
+  }
+}
+ 
+class TelaControllers extends StatefulWidget {
+  const TelaControllers({super.key});
+ 
+  @override
+  State<TelaControllers> createState() => _TelaControllersState();
+}
+ 
+class _TelaControllersState extends State<TelaControllers> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Controllers no Flutter')),
+      body: const Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Nome',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
