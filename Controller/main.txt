@@ -1,0 +1,78 @@
+import 'package:flutter/material.dart';
+ 
+void main() {
+  runApp(const MeuApp());
+}
+ 
+class MeuApp extends StatelessWidget {
+  const MeuApp({super.key});
+ 
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Controller Demo',
+      home: const TelaControllers(),
+    );
+  }
+}
+ 
+class TelaControllers extends StatefulWidget {
+  const TelaControllers({super.key});
+ 
+  @override
+  State<TelaControllers> createState() => _TelaControllersState();
+}
+ 
+class _TelaControllersState extends State<TelaControllers> {
+
+final TextEditingController _nomeController = TextEditingController();
+
+@override
+void dispose(){
+  _nomeController.dispose();
+  super.dispose();
+}
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Controllers no Flutter')),
+      body:  Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            TextField(
+            controller: _nomeController,
+              decoration: const InputDecoration(
+                labelText: 'Nome',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: (){
+                String nome = _nomeController.text;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Ola, $nome'))
+                );
+
+              }, child: Text ('Mostrar nome')
+            ),
+             SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: (){
+                _nomeController.clear();
+                String nome = _nomeController.text;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Ola, $nome'))
+                );
+
+              }, child: Text ('limpar')
+            ),
+
+          ],
+        ),
+      ),
+    );
+  }
+}
